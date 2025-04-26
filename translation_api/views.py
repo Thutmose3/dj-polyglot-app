@@ -14,7 +14,7 @@ from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django_filters.views import FilterView
 from django_tables2 import SingleTableView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .filters import TranslatableStringFilter
 from .models import SourceProject
 from .models import TranslatableString
@@ -39,7 +39,7 @@ def homepage(request):
     )
 
 
-class TranslationListView(FilterView, SingleTableView):
+class TranslationListView(LoginRequiredMixin, FilterView, SingleTableView):
     """List view for translations."""
 
     table_class = TranslatableStringTable
