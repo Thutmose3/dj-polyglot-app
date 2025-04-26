@@ -8,6 +8,8 @@ latest.dump.1
 latest.dump.2
 workspace/
 
+.vscode/
+
 # Django #
 *.log
 *.pot

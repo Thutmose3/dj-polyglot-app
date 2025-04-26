@@ -16,4 +16,3 @@ django-allauth-ui==1.5.1
 django-tables2==2.7.0
 django-currentuser==0.7.0
 crispy-tailwind==1.0.3
-logtail-python==0.3.2
