@@ -26,13 +26,22 @@ from rest_framework.authtoken.models import Token
 logger = logging.getLogger("django")
 
 
-@login_required
 @require_GET
 def homepage(request):
     """Homepage."""
     return render(
         request,
         "homepage.html",
+    )
+
+
+@login_required
+@require_GET
+def app_homepage(request):
+    """Homepage."""
+    return render(
+        request,
+        "app_homepage.html",
         context={
             "source_projects": SourceProject.objects.filter(users=request.user),
             "languages": [code for code, _ in settings.LANGUAGES],

@@ -1,36 +1,87 @@
+
 {% extends request.htmx|yesno:"htmx_base.html,base_dj_polyglot_app.html" %}
 {% load custom_filters %}
+{% block navbar %}
+{% endblock navbar %}
 {% block content %}
-    <main>
-        <a 
-            href="{% url 'create_source_project' %}"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button"
-        >
-            {% trans 'Create source project' %}
-        </a>
-        <br/>
-        {% trans 'API Key' %}: {{ api_key }}
-        {% if source_projects %}
-            <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
-                <div class="col-span-full mb-4 xl:mb-2">
-                    <h1>{{ source_project.name }}</h1>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                        {% for source_project in source_projects %}
-                            {% for language in languages %}
-                                <a
-                                    href="{% url "translation_dashboard" language source_project.id %}"
-                                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                                >
-                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                        {{ source_project.name }} - {{ language }} ({{ source_project|total_translated_strings:language }}/{{ source_project.get_total_strings }})
-                                    </h5>
-                                </a>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-gray-800 shadow p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">DJ POlyglot</a>
+            <div class="flex gap-4">
+                <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">Features</a>
+                <a href="#getting-started" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">Getting Started</a>
+                <a href="https://github.com/Thutmose3/dj-polyglot-app" target="_blank" class="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">GitHub</a>
+            </div>
         </div>
-    </main>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-100 dark:bg-blue-900 py-12">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-4">Manage Your Translations with Ease</h1>
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Open-source Django app to manage and translate strings efficiently. 
+            Works seamlessly with <a href="https://github.com/Thutmose3/dj-polyglot-lib" class="text-blue-600 underline">dj-polyglot-lib</a>.</p>
+            <a href="https://dj-polyglot.com/app" target="_blank" class="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+                Use Hosted Solution
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Features</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-2">Open Source</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Contribute, modify, and extend DJ-Polyglot as per your needs.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-2">Translation Management</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Send strings via API and manage translations via a simple and intuitive UI.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-2">Self-host or Use Our Cloud</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Host it yourself or use our hosted version at dj-polyglot.com.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot Section -->
+    <section class="bg-gray-100 dark:bg-gray-700 py-12">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Beautiful and Functional UI</h2>
+            <img src="images/dj-polyglot-ui.png" alt="DJ-Polyglot UI" class="mx-auto rounded shadow-lg">
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section id="getting-started" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Getting Started</h2>
+            <div class="max-w-3xl mx-auto">
+                <pre class="bg-gray-900 text-white p-6 rounded-lg overflow-x-auto">
+<code># Install dependencies
+pip install -r _requirements/local.txt
+
+# Run migrations
+python manage.py migrate
+
+# Start the server
+python manage.py runserver
+</code>
+                </pre>
+                <p class="text-center text-gray-600 dark:text-gray-300 mt-4">Check the <code>.env</code> file for configuration and add your DeepL API key!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12">
+        <div class="container mx-auto text-center py-6">
+            <p class="text-gray-600 dark:text-gray-400">&copy; 2025 DJ-Polyglot. Open-source with ❤️ for the Django community.</p>
+        </div>
+    </footer>
 {% endblock content %}

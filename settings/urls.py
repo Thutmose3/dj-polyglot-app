@@ -9,7 +9,7 @@ from translation_api.api import PullTranslationsView
 from translation_api.api import ReceiveTranslationsView
 from translation_api.views import ai_translate
 from translation_api.views import ai_translate_all_untranslated
-from translation_api.views import homepage
+from translation_api.views import homepage, app_homepage
 from translation_api.views import TranslationListView
 from translation_api.views import update_translation
 from translation_api.views import update_translation_info_cell
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r"^admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("", homepage, name="homepage"),
+    path("app", app_homepage, name="app_homepage"),
     path("create-source-project", create_source_project, name="create_source_project"),
     path(
         "translate/<str:language>/<int:source_project_id>", TranslationListView.as_view(), name="translation_dashboard"

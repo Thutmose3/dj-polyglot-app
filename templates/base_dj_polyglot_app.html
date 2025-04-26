@@ -46,6 +46,7 @@
     </head>
 
     <body class="font-sans antialiased bg-gray-100 dark:bg-gray-800 dark:text-white">
+        {% block navbar %}
         <nav class="z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 mb-15">
             <div class="py-3 px-3 lg:px-5 lg:pl-3">
                 <div class="flex justify-between items-center">
@@ -69,20 +70,22 @@
 
                             <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-2">
                                 <ul class="py-1" role="none">
-                                    <li>
-                                        <a
-                                            href="{% url "admin:index" %}"
-                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        >
-                                            Admin
-                                        </a>
-                                    </li>
+                                    {% if request.user.is_superuser %}
+                                        <li>
+                                            <a
+                                                href="{% url "admin:index" %}"
+                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                            >
+                                                Admin
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                     <li>
                                         <a
                                             href="{% url "account_logout" %}"
                                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         >
-                                            Logout
+                                            {% trans "Logout" %}
                                         </a>
                                     </li>
                                 </ul>
@@ -92,6 +95,7 @@
                 </div>
             </div>
         </nav>
+        {% endblock navbar %}
 
         <div id="main_content">
             {% block content %}
