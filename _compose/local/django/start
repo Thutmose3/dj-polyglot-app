@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ -d .git ]; then
+    python manage.py migrate || echo "Migrations failed, continuing..."
+    python manage.py runserver_plus 0.0.0.0:8000 || {
+        echo "❌ Server failed, sleeping indefinitely for debug..."
+        tail -f /dev/null
+    }
+else
+    echo "No .git directory found. Container will stay alive for manual operations."
+    apt update && apt install -y curl
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+    chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    apt update
+    apt install -y gh
+    tail -f /dev/null
+fi

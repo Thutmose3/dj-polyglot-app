@@ -1,0 +1,70 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+default_language_version:
+    python: python3.11
+
+repos:
+-   repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.264
+    hooks:
+        - id: ruff
+          args: [--fix, --exit-non-zero-on-fix]
+
+
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -    id: trailing-whitespace
+         exclude: (^docs/)
+    -    id: check-yaml
+    -    id: check-docstring-first
+    -    id: check-case-conflict
+    -    id: check-json
+    -    id: check-merge-conflict
+    -    id: check-symlinks
+    -    id: check-toml
+
+
+-   repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+    -    id: black
+         exclude: (^.*\b(migrations)\b.*$|^.*\b(__version__.py)\b.*)
+
+-   repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.1.1
+    hooks:
+    -    id: pydocstyle
+         exclude: (^.*\b(migrations)\b.*$|^g_merchant/|^annoying/|^.*\b(apps.py)\b.*)
+
+
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.9.0
+    hooks:
+    -   id: reorder-python-imports
+        args:
+            - --py37-plus
+        exclude: (^.*\b(migrations)\b.*$|^.*\b(__version__.py)\b.*)
+
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+    -   id: pyupgrade
+        args: [--py38-plus]
+
+-   repo: https://github.com/tox-dev/pyproject-fmt
+    rev: 0.9.2
+    hooks:
+    -   id: pyproject-fmt
+
+-   repo: https://github.com/rtts/djhtml
+    rev: 3.0.6
+    hooks:
+      - id: djhtml
+        entry: djhtml --tabwidth 4
+
+-   repo: https://github.com/djlint/djLint
+    rev: v1.35.4
+    hooks:
+      - id: djlint-django

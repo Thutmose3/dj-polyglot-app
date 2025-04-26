@@ -1,0 +1,26 @@
+
+<div
+    hx-get="{% url 'update_translation_info_cell' language translatable_string.id %}"
+    id="info_cell_{{ language }}_{{ translatable_string.id|unlocalize }}"
+    hx-trigger="trigger_info_cell_{{ language }}_{{ translatable_string.id|unlocalize }} from:body"
+    hx-target="#info_cell_{{ language }}_{{ translatable_string.id|unlocalize }}"
+    hx-push-url="false"
+>
+    {% if translated_string %}
+        {% if translated_string.translated_by_ai %}
+            {% trans "Translated with DeepL" %}<br/>
+        {% endif %}
+        {% if translated_string.translated_by %}
+            {% trans "Translated by" %} {{ translated_string.translated_by }}
+            {% if translated_string.translated_at %}
+                - {{ translated_string.translated_at }}
+            {% endif %}
+            <br/>
+        {% endif %}
+
+    {% endif %}
+
+    {% if translated_string.validated %}
+        {% trans "Validated by" %} {{ translated_string.validated_by }} - {{ translated_string.validated_at }}
+    {% endif %}
+</div>

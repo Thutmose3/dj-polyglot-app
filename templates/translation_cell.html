@@ -1,0 +1,29 @@
+<div id="translation_{{ translatable_string.id|unlocalize }}" onclick="event.stopPropagation();">
+    <form
+        hx-post="{% url 'update_translation' language translatable_string.id %}"
+        hx-swap="outerHTML"
+        hx-target="this"
+        hx-trigger="submit"
+        hx-push-url="false"
+        onclick="event.stopPropagation();"
+    >
+        <div x-data="{ originalValue: `{{ translated_string.translated_string }}`, currentValue: `{{ translated_string.translated_string }}` }">
+            <textarea
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="translated_string"
+                style="width: 300px;"
+                onclick="event.stopPropagation();"
+                x-model="currentValue"
+            ></textarea>
+
+            <button
+                class="{% include "sky_btn.html" %} mt-2"
+                type="submit"
+                x-show="currentValue !== originalValue"
+                x-transition
+            >
+                {% trans "Save" %}
+            </button>
+        </div>
+    </form>
+</div>

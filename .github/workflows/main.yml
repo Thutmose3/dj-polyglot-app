@@ -1,0 +1,61 @@
+name: Python application Github
+on: [push]
+
+env:
+  ALLOWED_HOSTS: localhost
+  DJANGO_SETTINGS_MODULE: settings.settings.tests
+  SECRET_KEY: test_secret_key
+  DEBUG: "False"
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+      - uses: pre-commit/action@v3.0.0
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+
+      - name: Install gettext
+        run: sudo apt-get install -y gettext
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.11
+          environment-file: environment.yml
+          activate-environment: test-env
+
+      - name: Collect static
+        shell: bash -l {0}
+        run: |
+          conda activate test-env
+          python manage.py collectstatic --noinput
+
+
+      - name: Test
+        shell: bash -l {0}
+        run: |
+          conda activate test-env
+          coverage run -m pytest -sv
+          coverage report -m --fail-under 30
+

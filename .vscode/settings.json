@@ -1,0 +1,13 @@
+{
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "python.envFile": "/app/.env",
+    "python.defaultInterpreterPath": "/usr/bin/python",
+    "python.testing.pytestArgs": [
+        "--ds=settings.settings.tests",
+        "--reuse-db",
+        "--color=yes",
+        "--verbose",
+    ]
+}

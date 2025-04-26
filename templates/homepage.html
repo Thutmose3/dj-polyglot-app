@@ -1,0 +1,25 @@
+{% extends request.htmx|yesno:"htmx_base.html,base_dj_polyglot_app.html" %}
+{% load custom_filters %}
+{% block content %}
+    <main>
+        <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+            <div class="col-span-full mb-4 xl:mb-2">
+                <h1>{{ source_project.name }}</h1>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                    {% for source_project in source_projects %}
+                        {% for language in languages %}
+                            <a
+                                href="{% url "translation_dashboard" language source_project.id %}"
+                                class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                            >
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    {{ source_project.name }} - {{ language }} ({{ source_project|total_translated_strings:language }}/{{ source_project.get_total_strings }})
+                                </h5>
+                            </a>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

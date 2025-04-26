@@ -1,0 +1,150 @@
+{% extends request.htmx|yesno:"htmx_base.html,base_dj_polyglot_app.html" %}
+{% load django_tables2 %}
+
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+    <div class="p-2 block bg-white sm:flex items-center justify-between border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="mb-1 w-full">
+            <div class="mb-1">
+                <span
+                    class="text-xl mt-3 font-semibold text-gray-900 sm:text-2xl dark:text-white first-letter:uppercase"
+                >
+                    {{ source_project.name }} - {{ language }}
+                    ({{ total_translated_strings }}/{{ table.data.count }})
+                </span>
+            </div>
+
+            <div class="block items-center sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+                <div>
+                    <span class="mb-4 sm:pr-3 sm:mb-0">
+                        <label for="search" class="sr-only">{% trans "Search" %}</label>
+                        <div class="relative mt-1 sm:w-64 xl:w-96">
+                            <input
+                                type="search"
+                                name="search"
+                                id="active_search_input"
+                                value="{{ request.GET.search }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="{% trans "Search" %}"
+                                hx-get="{{ request.path }}"
+                                hx-target="#main_content"
+                                hx-swap="innerHTML show:#body_id:top"
+                                hx-push-url="true"
+                                hx-indicator="#active_searcher"
+                                autocomplete="off"
+                            >
+                        </div>
+                    </span>
+                </div>
+                <div class="flex items-center w-full sm:justify-end space-x-2">
+                    <div class="hidden pl-2 space-x-1 md:flex"></div>
+
+                    <button
+                        data-dropdown-toggle="generic_filter_dropdown"
+                        class="{% include "sky_btn.html" %} inline-flex mb-5 mr-2"
+                        type="button"
+                    >
+                        {% trans "Filter" %}
+                        <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+
+                    <form
+                        hx-get="{{ request.path }}"
+                        hx-target="#main_content"
+                        hx-swap="innerHTML show:#body_id:top"
+                        hx-push-url="true"
+                        hx-indicator="#submit_filters_loader"
+                        id="generic_filter_dropdown"
+                        class="z-10 hidden max-w-screen-sm p-3 space-y-1 bg-white rounded-lg min-w-100 shadow-xl shadow-gray-700/50 dark:bg-gray-700 dark:text-white"
+                    >
+                        <div class="flex justify-between">
+                            <a
+                                class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                href="{{ request.path }}"
+                                hx-target="#main_content"
+                                hx-swap="innerHTML show:#body_id:top"
+                                hx-indicator="#reset_filters_loader"
+                            >
+                                <span id="reset_filters_loader">
+                                    <span class="hx-loader-text">
+                                        {% trans "Reset" %}
+                                    </span>
+                                    <i class="fa-light hx-loader-icon text-sky-500"></i>
+                                </span>
+                            </a>
+
+                            <button
+                                class="{% include "sky_btn.html" %}"
+                            >
+                                <span id="submit_filters_loader">
+                                    <span class="hx-loader-text">
+                                        {% trans "Apply" %}
+                                    </span>
+                                    <i class="fa-light hx-loader-icon"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        {% if filter.form.helper %}
+                            {% crispy filter.form filter.form.helper %}
+                        {% else %}
+                            {{ filter.form|crispy }}
+                        {% endif %}
+                    </form>
+                    <script>
+                        initDropdownByElement(document.getElementById("generic_filter_dropdown"));
+                    </script>
+
+                    <a
+                        href="{% url 'ai_translate_all_untranslated' language source_project.id %}"
+                        class="{% include "sky_btn.html" %} mb-5 mr-2"
+                    >
+                        {% trans "Translate all untranslated" %}
+                    </a>
+
+                    <a
+                        href="{% url 'translation_dashboard' language source_project.id %}?validated=True"
+                        class="{% include "sky_btn.html" %} mb-5 mr-2"
+                    >
+                        {% trans "Validated" %}
+                    </a>
+
+                    <a
+                        href="{% url 'translation_dashboard' language source_project.id %}?validated=False"
+                        class="{% include "sky_btn.html" %} mb-5 mr-2"
+                    >
+                        {% trans "Unvalidated" %}
+                    </a>
+
+                    <a
+                        href="{% url 'translation_dashboard' language source_project.id %}?translated=True"
+                        class="{% include "sky_btn.html" %} mb-5 mr-2"
+                    >
+                        {% trans "Translated" %}
+                    </a>
+
+                    <a
+                        href="{% url 'translation_dashboard' language source_project.id %}?translated=False"
+                        class="{% include "sky_btn.html" %} mb-5 mr-2"
+                    >
+                        {% trans "Untranslated" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col p-2">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow">
+                    {% render_table table %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

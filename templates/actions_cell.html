@@ -1,0 +1,31 @@
+<div
+    hx-get="{% url 'update_validate_cell' language translatable_string.id %}"
+    id="validated_cell_{{ language }}_{{ translatable_string.id|unlocalize }}"
+    hx-trigger="trigger_validated_cell_{{ language }}_{{ translatable_string.id|unlocalize }} from:body"
+    hx-target="#validated_cell_{{ language }}_{{ translatable_string.id|unlocalize }}"
+    hx-push-url="false"
+>
+    {% if not translated_string.validated %}
+        <button
+            class="{% include "green_btn.html" %}"
+            hx-get="{% url 'validate' language translatable_string.id %}"
+            hx-trigger="click consume"
+            hx-target="#validated_cell_{{ language }}_{{ translatable_string.id|unlocalize }}"
+            hx-push-url="false"
+        >
+            {% trans "Validate" %}
+        </button>
+        <button
+            class="{% include "sky_btn.html" %} mt-2"
+            hx-get="{% url 'ai_translate' language translatable_string.id %}"
+            hx-target="#translation_{{ translatable_string.id|unlocalize }}"
+            hx-trigger="click consume"
+            hx-push-url="false"
+        >
+            {% trans "AI translate" %}
+        </button>
+    {% else %}
+        <i class="fa-solid fa-check text-green-500"></i>
+    {% endif %}
+
+</div>
