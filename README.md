@@ -3,6 +3,8 @@
 This project is still under development. We decided to opensource our project to get more contributors from the Django community.
 This project works in tandem with the dj_polyglot library. that contains some python management commands to help push your translations to this translation service.
 
+It works together with the dj-polyglot library: https://github.com/Thutmose3/dj-polyglot-lib
+
 ## Description
 This is the UI for DJ-POlyglot. It is a Django application that allows the management translation strings. It has an API that will receive strings, and provides a nice UI to manage and translate them.
 
