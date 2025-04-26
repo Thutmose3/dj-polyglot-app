@@ -13,7 +13,7 @@ This is the UI for DJ-POlyglot. It is a Django application that allows the manag
 
 ## Getting Started
 ``` bash
-pip install -r requirements/local.txt
+pip install -r _requirements/local.txt
 python manage.py migrate
 python manage.py runserver
 ```
