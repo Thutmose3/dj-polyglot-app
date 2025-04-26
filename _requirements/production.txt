@@ -1,3 +1,4 @@
 -r base.txt
 
 gunicorn==23.0.0
+logtail-python==0.3.3
