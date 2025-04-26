@@ -22,6 +22,8 @@ DEEPL_KEY=PUT_YOUT_API_KEY_HERE
 ```
 
 ## Tailwind CSS Setup
+```bash
 npm install flowbite
 npx tailwindcss init tailwind.config.js
 npx tailwindcss -i ./static/src/input_dj_polyglot_app.css -o ./static/src/output_dj_polyglot_app.css --watch
+```
