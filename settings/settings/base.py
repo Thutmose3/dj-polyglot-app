@@ -198,12 +198,8 @@ SITE_ID = 1
 # ==============================================================================
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dj_polyglot_app",
-        "USER": "debug",
-        "PASSWORD": "debug",
-        "HOST": "postgres",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 

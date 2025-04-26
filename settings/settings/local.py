@@ -14,7 +14,6 @@ COMPRESS_OFFLINE = False
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-
 # ==============================================================================
 # MEDIA FILES SETTINGS
 # ==============================================================================

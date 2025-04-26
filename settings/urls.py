@@ -17,7 +17,7 @@ from translation_api.views import update_validate_cell
 from translation_api.views import validate
 
 urlpatterns = [
-    url(r"^jifowjqwieurtiwoutio27819qwfjko2pyt89ajigop273951243/", admin.site.urls),
+    url(r"^admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("", homepage, name="homepage"),
     path(
