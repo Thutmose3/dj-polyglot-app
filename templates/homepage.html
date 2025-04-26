@@ -2,24 +2,35 @@
 {% load custom_filters %}
 {% block content %}
     <main>
-        <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
-            <div class="col-span-full mb-4 xl:mb-2">
-                <h1>{{ source_project.name }}</h1>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                    {% for source_project in source_projects %}
-                        {% for language in languages %}
-                            <a
-                                href="{% url "translation_dashboard" language source_project.id %}"
-                                class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                            >
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    {{ source_project.name }} - {{ language }} ({{ source_project|total_translated_strings:language }}/{{ source_project.get_total_strings }})
-                                </h5>
-                            </a>
+        <a 
+            href="{% url 'create_source_project' %}"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+        >
+            {% trans 'Create source project' %}
+        </a>
+        <br/>
+        {% trans 'API Key' %}: {{ api_key }}
+        {% if source_projects %}
+            <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+                <div class="col-span-full mb-4 xl:mb-2">
+                    <h1>{{ source_project.name }}</h1>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                        {% for source_project in source_projects %}
+                            {% for language in languages %}
+                                <a
+                                    href="{% url "translation_dashboard" language source_project.id %}"
+                                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                                >
+                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                        {{ source_project.name }} - {{ language }} ({{ source_project|total_translated_strings:language }}/{{ source_project.get_total_strings }})
+                                    </h5>
+                                </a>
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </main>
 {% endblock content %}

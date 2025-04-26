@@ -1,5 +1,5 @@
 import logging
-
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,7 +21,8 @@ from .models import TranslatableString
 from .models import TranslatedString
 from .tables import TranslatableStringTable
 from .utils import translate_string_deepl
-
+from .forms import SourceProjectForm
+from rest_framework.authtoken.models import Token
 logger = logging.getLogger("django")
 
 
@@ -35,9 +36,25 @@ def homepage(request):
         context={
             "source_projects": SourceProject.objects.filter(users=request.user),
             "languages": [code for code, _ in settings.LANGUAGES],
+            "source_project_form": SourceProjectForm(),
+            "api_key": Token.objects.get_or_create(user=request.user)[0],
         },
     )
 
+@login_required
+def create_source_project(request):
+    if request.method == 'POST':
+        form = SourceProjectForm(request.POST)
+        if form.is_valid():
+            source_project = form.save()
+            source_project.users.add(request.user)
+            source_project.admins.add(request.user)
+            source_project.save()
+            return redirect('homepage')
+    else:
+        form = SourceProjectForm()
+    
+    return render(request, 'create_source_project.html', {'form': form})
 
 class TranslationListView(LoginRequiredMixin, FilterView, SingleTableView):
     """List view for translations."""

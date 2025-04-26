@@ -14,12 +14,13 @@ from translation_api.views import TranslationListView
 from translation_api.views import update_translation
 from translation_api.views import update_translation_info_cell
 from translation_api.views import update_validate_cell
-from translation_api.views import validate
+from translation_api.views import validate, create_source_project
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("", homepage, name="homepage"),
+    path("create-source-project", create_source_project, name="create_source_project"),
     path(
         "translate/<str:language>/<int:source_project_id>", TranslationListView.as_view(), name="translation_dashboard"
     ),
