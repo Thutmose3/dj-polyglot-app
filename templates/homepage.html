@@ -22,7 +22,7 @@
             <h1 class="text-4xl font-bold mb-4">Manage Your Translations with Ease</h1>
             <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">Open-source Django app to manage and translate strings efficiently. 
             Works seamlessly with <a href="https://github.com/Thutmose3/dj-polyglot-lib" class="text-blue-600 underline">dj-polyglot-lib</a>.</p>
-            <a href="https://dj-polyglot.com/app" target="_blank" class="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+            <a href="https://dj-polyglot.com/app" class="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
                 Use Hosted Solution
             </a>
         </div>
@@ -60,10 +60,32 @@
     <!-- Getting Started -->
     <section id="getting-started" class="py-12">
         <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12">Getting Started</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">Start managing your .PO files</h2>
             <div class="max-w-3xl mx-auto">
                 <pre class="bg-gray-900 text-white p-6 rounded-lg overflow-x-auto">
-<code># Install dependencies
+<code>pip install dj-polyglot
+
+# Push translations to the server
+python manage.py push_translations
+
+# Pull translations from the server to .po files
+python manage.py pull_translations
+</code>
+                </pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute -->
+    <section id="contribute" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Contribute to the UI/APP</h2>
+            <div class="max-w-3xl mx-auto">
+                <pre class="bg-gray-900 text-white p-6 rounded-lg overflow-x-auto">
+<code># Clone repository
+git clone https://github.com/Thutmose3/dj-polyglot-app.git
+    
+# Install dependencies
 pip install -r _requirements/local.txt
 
 # Run migrations

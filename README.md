@@ -5,7 +5,7 @@ It works together with the dj-polyglot library: https://github.com/Thutmose3/dj-
 
 You can use our hosted solution at https://dj-polyglot.com. Or host it yourself.
 
-![DJ POlyglot UI](images/dj-polyglot-ui.png)
+![DJ POlyglot UI](static/images/dj-polyglot-ui.png)
 
 
 ## Description
