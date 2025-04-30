@@ -1,5 +1,5 @@
 
-# Django Polyglot App (Under development)
+# Django Polyglot App - Manage your .po files in the cloud
 This project is still under development. We decided to opensource our project to get more contributors from the Django community.
 It works together with the dj-polyglot library: https://github.com/Thutmose3/dj-polyglot-lib that contains some python management commands to help push your translations to this translation service.
 
