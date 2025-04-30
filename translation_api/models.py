@@ -56,10 +56,7 @@ class TranslatableString(models.Model):
 
     def get_translated_string(self, language):
         """Get translation."""
-        try:
-            return TranslatedString.objects.get(string=self, language=language)
-        except TranslatedString.DoesNotExist:
-            return None
+        return TranslatedString.objects.get_or_create(string=self, language=language)[0]
 
     class Meta:
         unique_together = ("source_project", "string", "context")
