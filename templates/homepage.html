@@ -33,12 +33,10 @@
     <section class="bg-blue-100 dark:bg-blue-900 py-12">
         <div class="container mx-auto text-center">
             <h1 class="text-4xl font-bold mb-4">
-                {% trans "Manage your .po files in the cloud, works seamlessly with Django" %}
+                {% trans "Manage your .po files in the cloud, works seamlessly with" %}
             </h1>
             <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
                 {% trans "Easily push and manage translations from .po files in the cloud, then pull translations back into your .po files." %}
-                {% trans "Works seamlessly with " %}
-                <a href="https://github.com/Thutmose3/dj-polyglot-lib" class="text-blue-600 underline">dj-polyglot-lib</a>.
             </p>
             <a href="https://dj-polyglot.com/app" class="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
                 {% trans "Use Hosted Solution" %}
@@ -94,6 +92,13 @@
             <h2 class="text-3xl font-bold text-center mb-12">
                 {% trans "Start managing your .PO files" %}
             </h2>
+            <a
+                href="https://github.com/Thutmose3/dj-polyglot-lib"
+                class="text-blue-600 underline"
+                target="_blank"
+            >
+                dj-polyglot-lib
+            </a>
             <div class="max-w-3xl mx-auto">
                 <pre class="bg-gray-900 text-white p-6 rounded-lg overflow-x-auto">
 <code>pip install dj-polyglot
