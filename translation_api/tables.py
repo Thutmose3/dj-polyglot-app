@@ -33,8 +33,6 @@ class TranslatableStringTable(tables.Table):
             "info",
         ]
 
-
-
     def __init__(self, language, *args, **kwargs):
         self.language = language
         super().__init__(*args, **kwargs)
@@ -43,14 +41,15 @@ class TranslatableStringTable(tables.Table):
             "class": lambda record: (
                 "border-b bg-green-500 hover:bg-green-600 cursor-pointer"
                 if self._get_translated_string_cached(record).validated
-                else "border-b bg-sky-500 hover:bg-sky-500 dark:hover:border-green-600 cursor-pointer"
-                if self._get_translated_string_cached(record).translated_by_ai
-                else "border-b bg-pink-300 border-pink-300 hover:bg-pink-400 "
+                else (
+                    "border-b bg-sky-500 hover:bg-sky-500 dark:hover:border-green-600 cursor-pointer"
+                    if self._get_translated_string_cached(record).translated_by_ai
+                    else "border-b bg-pink-300 border-pink-300 hover:bg-pink-400 "
                     "dark:border-pink-600 dark:bg-pink-700 dark:hover:bg-pink-600 "
                     "dark:hover:border-pink-600 cursor-pointer"
+                )
             )
         }
-
 
     def render_string(self, record):
         """Render string."""

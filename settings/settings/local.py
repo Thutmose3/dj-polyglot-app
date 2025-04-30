@@ -4,10 +4,7 @@ from .base import *
 # ==============================================================================
 # CORE SETTINGS
 # ==============================================================================
-INSTALLED_APPS += [
-    "django_browser_reload",
-    "django_extensions"
-]
+INSTALLED_APPS += ["django_browser_reload", "django_extensions"]
 
 COMPRESS_ENABLED = False
 COMPRESS_OFFLINE = False

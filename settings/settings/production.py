@@ -1,5 +1,4 @@
 # flake8: noqa
-
 from .base import *
 
 DEBUG = False
@@ -27,11 +26,11 @@ if BETTERSTACK_TOKEN:
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
-        'handlers': {
-            'logtail': {
-                'class': 'logtail.LogtailHandler',
-                'source_token': BETTERSTACK_TOKEN,
-                'host': config("BETTERSTACK_HOST"),
+        "handlers": {
+            "logtail": {
+                "class": "logtail.LogtailHandler",
+                "source_token": BETTERSTACK_TOKEN,
+                "host": config("BETTERSTACK_HOST"),
             },
         },
         "loggers": {

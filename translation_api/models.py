@@ -40,7 +40,7 @@ class TranslatableString(models.Model):
 
     uuid = models.UUIDField(editable=False, unique=True, null=True, blank=True)
     pageviews = models.PositiveIntegerField(default=0, null=True, blank=True)
-    
+
     updated = models.DateTimeField(auto_now=True)
     flagged = models.BooleanField(default=False)
 

@@ -1,18 +1,17 @@
 {% extends request.htmx|yesno:"htmx_base.html,base_dj_polyglot_app.html" %}
 {% load custom_filters %}
 
-
 {% block content %}
     <main>
-        <a 
+        <a
             href="{% url 'create_source_project' %}"
             class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button"
         >
-            {% trans 'Create source project' %}
+            {% trans "Create source project" %}
         </a>
         <br/>
-        {% trans 'API Key' %}: {{ api_key }}
+        {% trans "API Key" %}: {{ api_key }}
         {% if source_projects %}
             <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
                 <div class="col-span-full mb-4 xl:mb-2">
@@ -32,7 +31,7 @@
                         {% endfor %}
                     </div>
                 </div>
-            {% endif %}
-        </div>
+        {% endif %}
+    </div>
     </main>
 {% endblock content %}

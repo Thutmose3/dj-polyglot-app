@@ -1,12 +1,14 @@
 import logging
-from django.shortcuts import render, redirect
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -14,15 +16,16 @@ from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django_filters.views import FilterView
 from django_tables2 import SingleTableView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.authtoken.models import Token
+
 from .filters import TranslatableStringFilter
+from .forms import SourceProjectForm
 from .models import SourceProject
 from .models import TranslatableString
 from .models import TranslatedString
 from .tables import TranslatableStringTable
 from .utils import translate_string_deepl
-from .forms import SourceProjectForm
-from rest_framework.authtoken.models import Token
+
 logger = logging.getLogger("django")
 
 
@@ -50,20 +53,23 @@ def app_homepage(request):
         },
     )
 
+
 @login_required
 def create_source_project(request):
-    if request.method == 'POST':
+    """Create a new source project."""
+    if request.method == "POST":
         form = SourceProjectForm(request.POST)
         if form.is_valid():
             source_project = form.save()
             source_project.users.add(request.user)
             source_project.admins.add(request.user)
             source_project.save()
-            return redirect('homepage')
+            return redirect("homepage")
     else:
         form = SourceProjectForm()
-    
-    return render(request, 'create_source_project.html', {'form': form})
+
+    return render(request, "create_source_project.html", {"form": form})
+
 
 class TranslationListView(LoginRequiredMixin, FilterView, SingleTableView):
     """List view for translations."""

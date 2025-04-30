@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand
-from django.utils import timezone
-from translation_api.models import SourceProject, TranslatableString
+
+from translation_api.models import SourceProject
+from translation_api.models import TranslatableString
+
 
 class Command(BaseCommand):
     """Management command to change the system_brand field of the SystemInfo model."""
@@ -17,4 +19,3 @@ class Command(BaseCommand):
             source_project=source_project,
             string="Hello, World!",
         )
-

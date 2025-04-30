@@ -58,12 +58,6 @@ repos:
     hooks:
     -   id: pyproject-fmt
 
--   repo: https://github.com/rtts/djhtml
-    rev: 3.0.6
-    hooks:
-      - id: djhtml
-        entry: djhtml --tabwidth 4
-
 -   repo: https://github.com/djlint/djLint
     rev: v1.35.4
     hooks:

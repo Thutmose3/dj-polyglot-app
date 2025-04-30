@@ -9,12 +9,14 @@ from translation_api.api import PullTranslationsView
 from translation_api.api import ReceiveTranslationsView
 from translation_api.views import ai_translate
 from translation_api.views import ai_translate_all_untranslated
-from translation_api.views import homepage, app_homepage
+from translation_api.views import app_homepage
+from translation_api.views import create_source_project
+from translation_api.views import homepage
 from translation_api.views import TranslationListView
 from translation_api.views import update_translation
 from translation_api.views import update_translation_info_cell
 from translation_api.views import update_validate_cell
-from translation_api.views import validate, create_source_project
+from translation_api.views import validate
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
