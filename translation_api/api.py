@@ -104,6 +104,7 @@ class PullTranslationsView(APIView):
                         {
                             "msgid": translatable_string.string,
                             "msgstr": translated_string.translated_string,
+                            "msgctxt": translatable_string.context,
                             "locale": translated_string.language,
                         }
                     )

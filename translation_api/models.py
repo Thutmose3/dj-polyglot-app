@@ -59,7 +59,9 @@ class TranslatableString(models.Model):
         return TranslatedString.objects.get_or_create(string=self, language=language)[0]
 
     class Meta:
-        unique_together = ("source_project", "string", "context")
+        constraints = [
+            models.UniqueConstraint(fields=["source_project", "string", "context"], name="unique_translation_key")
+        ]
 
 
 class TranslatedString(models.Model):
