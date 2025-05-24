@@ -18,8 +18,4 @@ class Migration(migrations.Migration):
             model_name='translatablestring',
             constraint=models.UniqueConstraint(fields=('source_project', 'string', 'context'), name='unique_translation_key'),
         ),
-        migrations.RemoveField(
-            model_name='translatablestring',
-            name='created',
-        ),
     ]
