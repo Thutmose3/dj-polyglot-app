@@ -9,7 +9,7 @@ from .models import TranslatedString
 class TranslatableStringAdmin(admin.ModelAdmin):
     """TranslatableString admin."""
 
-    search_fields = ["string"]
+    search_fields = ["string", "context"]
     list_display = ["string", "source_project", "context"]
     list_filter = ["source_project"]
 
