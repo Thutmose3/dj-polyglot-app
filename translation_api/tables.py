@@ -29,6 +29,7 @@ class TranslatableStringTable(tables.Table):
         fields = [
             "string",
             "translation",
+            "context",
             "actions",
             "info",
         ]
@@ -50,14 +51,6 @@ class TranslatableStringTable(tables.Table):
                 )
             )
         }
-
-    def render_string(self, record):
-        """Render string."""
-
-        if record.context:
-            return f"{record.string} ({record.context})"
-
-        return record.string
 
     def render_translation(self, record):
         """Render translation."""
