@@ -1,11 +1,8 @@
-from django.conf import settings
-
-
-def translate_string_deepl(string, target_lang, source_lang=None, context=None, formality="default"):
+def translate_string_deepl(string, target_lang, deepl_key, source_lang=None, context=None, formality="default"):
     """Translate a string using depl."""
     import deepl
 
-    translator = deepl.Translator(settings.DEEPL_KEY)
+    translator = deepl.Translator(deepl_key)
     if target_lang == "no":
         target_lang = "nb"
     if target_lang == "en":

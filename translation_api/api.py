@@ -50,7 +50,11 @@ class ReceiveTranslationsView(APIView):
                         context = source_project.default_context
 
                     translated_string = translate_string_deepl(
-                        translatable_string.string, target_lang=language, source_lang="en", context=context
+                        translatable_string.string,
+                        target_lang=language,
+                        deepl_key=source_project.deepl_key,
+                        source_lang="en",
+                        context=context,
                     )
                     # make sure the same amount of {} are in the translated string
                     if translatable_string.string.count("{}") != translated_string.count("{}"):

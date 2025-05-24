@@ -10,6 +10,7 @@ class SourceProject(models.Model):
     default_context = models.CharField(max_length=50000, blank=True, null=True)
     users = models.ManyToManyField(User, blank=True, related_name="source_project_users")
     admins = models.ManyToManyField(User, blank=True, related_name="source_project_admins")
+    deepl_key = models.CharField(max_length=500, blank=True, null=True)
 
     uuid = models.UUIDField(editable=False, unique=True, null=True, blank=True)
     pageviews = models.PositiveIntegerField(default=0, null=True, blank=True)

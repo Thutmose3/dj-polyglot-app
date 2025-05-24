@@ -172,7 +172,11 @@ def ai_translate(request, language, translatable_string_id):
         context = translatable_string.source_project.default_context
 
     deepl_translated_string = translate_string_deepl(
-        translatable_string.string, target_lang=language, source_lang="en", context=context
+        translatable_string.string,
+        target_lang=language,
+        deepl_key=translatable_string.source_project.deepl_key,
+        source_lang="en",
+        context=context,
     )
 
     if translatable_string.string.count("{}") != deepl_translated_string.count("{}"):
@@ -231,7 +235,11 @@ def ai_translate_all_untranslated(request, language, source_project_id):
             if not context:
                 context = translatable_string.source_project.default_context
             translated_string = translate_string_deepl(
-                translatable_string.string, target_lang=language, source_lang="en", context=context
+                translatable_string.string,
+                target_lang=language,
+                deepl_key=source_project.deepl_key,
+                source_lang="en",
+                context=context,
             )
 
             # make sure the same amount of {} are in the translated string
