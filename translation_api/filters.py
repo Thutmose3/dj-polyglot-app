@@ -57,4 +57,6 @@ class TranslatableStringFilter(django_filters.FilterSet):
             translated_string__icontains=value, language=self.language
         ).values_list("string", flat=True)
 
-        return queryset.filter(Q(id__in=translatable_string_ids) | Q(string__icontains=value)).distinct()
+        return queryset.filter(
+            Q(id__in=translatable_string_ids) | Q(string__icontains=value) | Q(context__icontains=value)
+        ).distinct()
