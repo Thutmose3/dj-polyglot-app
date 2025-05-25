@@ -1,5 +1,8 @@
+import html
+
 import django_tables2 as tables
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 from .models import TranslatableString
 
@@ -51,6 +54,11 @@ class TranslatableStringTable(tables.Table):
                 )
             )
         }
+
+    def render_string(self, value):
+        """Render string with HTML escaping and line breaks."""
+        escaped = html.escape(value)
+        return mark_safe(escaped.replace("\n", "<br>"))
 
     def render_translation(self, record):
         """Render translation."""
