@@ -72,7 +72,7 @@ class TranslatedString(models.Model):
     string = models.ForeignKey(TranslatableString, on_delete=models.CASCADE, null=False, blank=False)
     language = models.CharField(max_length=10, blank=False, null=False)
 
-    translated_string = models.CharField(max_length=50000, blank=False, null=False)
+    translated_string = models.TextField(blank=False, null=False)
     translated_at = models.DateTimeField(null=True, blank=True)
     translated_by_ai = models.BooleanField(default=False)
     translated_by = models.ForeignKey(
