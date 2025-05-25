@@ -36,7 +36,7 @@ class TranslatableString(models.Model):
     """Model for Brand."""
 
     source_project = models.ForeignKey(SourceProject, on_delete=models.CASCADE, null=False, blank=False)
-    string = models.CharField(max_length=50000, blank=False, null=False)
+    string = models.TextField(blank=False, null=False)
     context = models.CharField(max_length=50000, blank=True, null=True)
 
     uuid = models.UUIDField(editable=False, unique=True, null=True, blank=True)
