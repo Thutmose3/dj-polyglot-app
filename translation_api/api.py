@@ -37,9 +37,19 @@ class ReceiveTranslationsView(APIView):
             msgid = translation.get("msgid")
             context = translation.get("context")
             # locale = translation.get("locale")
-            translatable_string, created = TranslatableString.objects.get_or_create(
-                string=msgid, source_project=source_project, context=context
-            )
+            try:
+                translatable_string, created = TranslatableString.objects.get_or_create(
+                    string=msgid, source_project=source_project, context=context
+                )
+
+            except TranslatableString.MultipleObjectsReturned:
+                return Response(
+                    {
+                        "error": f"Multiple translatable strings found for the same msgid and context: {msgid} with context: {context} in project {source_project.name}"
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
             translatable_string_ids.append(translatable_string.id)
             for language in [code for code, _ in settings.LANGUAGES]:
                 if language == "en":
