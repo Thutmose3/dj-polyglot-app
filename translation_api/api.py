@@ -26,7 +26,7 @@ class ReceiveTranslationsView(APIView):
     def post(self, request, *args, **kwargs):
         """Receive translations from the client and save them to the database."""
         translations = request.data.get("translations", [])
-        no_obselete = request.data.get("no_obselete", False)
+        no_obsolete = request.data.get("no_obsolete", False)
         source_project = SourceProject.objects.get_or_create(
             name=request.data.get("source_project"), admins__in=[request.user]
         )[0]
@@ -79,7 +79,7 @@ class ReceiveTranslationsView(APIView):
                         translated_by=None,
                     )
 
-        if no_obselete:
+        if no_obsolete:
             TranslatableString.objects.filter(source_project=source_project).exclude(
                 id__in=translatable_string_ids
             ).delete()
