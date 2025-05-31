@@ -6,24 +6,20 @@ from django.utils.functional import Promise
 
 
 class LazyEncoder(json.JSONEncoder):
-    """Encodes django's lazy i18n strings."""
 
     def default(self, obj):
-        """Encodes django's lazy i18n strings."""
         if isinstance(obj, Promise):
             return force_str(obj)
         return super().default(obj)
 
 
 class HtmxMessageMiddleware:
-    """Middleware to add handle messages and HTMX."""
 
     def __init__(self, get_response):
         self.get_response = get_response
         # One-time configuration and initialization.
 
     def __call__(self, request):
-        """Add messages to HX-Trigger header so it is picked up by HTMX in the frontend."""
         # Code to be executed for each request before
         # the view (and later middleware) are called.
 

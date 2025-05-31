@@ -8,7 +8,6 @@ from .models import TranslatableString
 
 
 class TranslatableStringTable(tables.Table):
-    """Table for the TranslatableString model."""
 
     translation = tables.Column(
         verbose_name="Translation",
@@ -56,12 +55,10 @@ class TranslatableStringTable(tables.Table):
         }
 
     def render_string(self, value):
-        """Render string with HTML escaping and line breaks."""
         escaped = html.escape(value)
         return mark_safe(escaped.replace("\n", "<br>"))
 
     def render_translation(self, record):
-        """Render translation."""
         return render_to_string(
             "translation_cell.html",
             {
@@ -72,7 +69,6 @@ class TranslatableStringTable(tables.Table):
         )
 
     def render_info(self, record):
-        """Render info."""
         return render_to_string(
             "info_cell.html",
             {
@@ -83,7 +79,6 @@ class TranslatableStringTable(tables.Table):
         )
 
     def render_actions(self, record):
-        """Render actions."""
         return render_to_string(
             "actions_cell.html",
             {
@@ -94,7 +89,6 @@ class TranslatableStringTable(tables.Table):
         )
 
     def _get_translated_string_cached(self, record):
-        """Helper method to cache and fetch translated data."""
         if not hasattr(record, "_translated_string_cache"):
             record._translated_string_cache = record.get_translated_string(language=self.language)
         return record._translated_string_cache

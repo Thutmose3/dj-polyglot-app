@@ -31,7 +31,6 @@ logger = logging.getLogger("django")
 
 @require_GET
 def homepage(request):
-    """Homepage."""
     return render(
         request,
         "homepage.html",
@@ -41,7 +40,6 @@ def homepage(request):
 @login_required
 @require_GET
 def app_homepage(request):
-    """Homepage."""
     return render(
         request,
         "app_homepage.html",
@@ -56,7 +54,6 @@ def app_homepage(request):
 
 @login_required
 def create_source_project(request):
-    """Create a new source project."""
     if request.method == "POST":
         form = SourceProjectForm(request.POST)
         if form.is_valid():
@@ -72,7 +69,6 @@ def create_source_project(request):
 
 
 class TranslationListView(LoginRequiredMixin, FilterView, SingleTableView):
-    """List view for translations."""
 
     table_class = TranslatableStringTable
     model = TranslatableString
@@ -81,23 +77,19 @@ class TranslationListView(LoginRequiredMixin, FilterView, SingleTableView):
     table_pagination = {"per_page": 50}
 
     def get_table_kwargs(self):
-        """Return the keyword arguments for instantiating the table."""
         kwargs = super().get_table_kwargs()
         kwargs["language"] = self.kwargs["language"]
         return kwargs
 
     def get_filterset_kwargs(self, filterset_class):
-        """Return the keyword arguments for instantiating the filterset."""
         kwargs = super().get_filterset_kwargs(filterset_class)
         kwargs["language"] = self.kwargs["language"]
         return kwargs
 
     def get_queryset(self):
-        """Get only the not archived objects."""
         return super().get_queryset().filter(archived=False)
 
     def get_context_data(self, **kwargs):
-        """Add the languages to the context."""
         context = super().get_context_data(**kwargs)
         language = self.kwargs.get("language")
         source_project_id = self.kwargs.get("source_project_id")
@@ -121,7 +113,6 @@ class TranslationListView(LoginRequiredMixin, FilterView, SingleTableView):
 @login_required
 @require_POST
 def update_translation(request, language, translatable_string_id):
-    """Update cell."""
 
     record = TranslatableString.objects.get(id=translatable_string_id)
 
@@ -158,7 +149,6 @@ def update_translation(request, language, translatable_string_id):
 
 @login_required
 def ai_translate(request, language, translatable_string_id):
-    """Update cell."""
 
     translatable_string = TranslatableString.objects.get(id=translatable_string_id)
     if not translatable_string.source_project.users.filter(id=request.user.id).exists():
@@ -216,7 +206,6 @@ def ai_translate(request, language, translatable_string_id):
 
 @login_required
 def ai_translate_all_untranslated(request, language, source_project_id):
-    """Translate all strings."""
     source_project = get_object_or_404(SourceProject, id=source_project_id)
     translatable_strings = TranslatableString.objects.filter(source_project=source_project)
     if not source_project.users.filter(id=request.user.id).exists():
@@ -263,7 +252,6 @@ def ai_translate_all_untranslated(request, language, source_project_id):
 
 @login_required
 def validate(request, language, translatable_string_id):
-    """Update cell."""
 
     translatable_string = TranslatableString.objects.get(id=translatable_string_id)
     translated_string = get_object_or_404(
@@ -303,7 +291,6 @@ def validate(request, language, translatable_string_id):
 
 @login_required
 def update_validate_cell(request, language, translatable_string_id):
-    """Update cell."""
 
     translatable_string = TranslatableString.objects.get(id=translatable_string_id)
 
@@ -327,7 +314,6 @@ def update_validate_cell(request, language, translatable_string_id):
 
 @login_required
 def update_translation_info_cell(request, language, translatable_string_id):
-    """Update cell."""
 
     translatable_string = TranslatableString.objects.get(id=translatable_string_id)
 

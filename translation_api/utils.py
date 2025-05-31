@@ -1,5 +1,4 @@
 def translate_string_deepl(string, target_lang, deepl_key, source_lang=None, context=None, formality="default"):
-    """Translate a string using depl."""
     import deepl
 
     translator = deepl.Translator(deepl_key)

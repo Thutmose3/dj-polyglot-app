@@ -5,12 +5,10 @@ from translation_api.models import TranslatableString
 
 
 class Command(BaseCommand):
-    """Management command to change the system_brand field of the SystemInfo model."""
 
     help = "Changes the system_brand field of the SystemInfo model."
 
     def handle(self, *args, **options):
-        """Handle the command."""
         source_project = SourceProject.objects.get_or_create(
             name="Test Project",
         )[0]

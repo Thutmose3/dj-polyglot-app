@@ -4,7 +4,6 @@ from django.urls import reverse
 
 
 class SourceProject(models.Model):
-    """Model for SourceProject."""
 
     name = models.CharField(max_length=500, blank=False, null=False, unique=True)
     default_context = models.CharField(max_length=50000, blank=True, null=True)
@@ -24,16 +23,13 @@ class SourceProject(models.Model):
         return self.name
 
     def get_total_strings(self):
-        """Get total strings."""
         return TranslatableString.objects.filter(source_project=self).count()
 
     def get_total_translated_strings(self, language):
-        """Get total translated strings."""
         return TranslatedString.objects.filter(string__source_project=self, language=language).count()
 
 
 class TranslatableString(models.Model):
-    """Model for Brand."""
 
     source_project = models.ForeignKey(SourceProject, on_delete=models.CASCADE, null=False, blank=False)
     string = models.TextField(blank=False, null=False)
@@ -53,11 +49,9 @@ class TranslatableString(models.Model):
         return str(self.string)
 
     def get_absolute_url(self):
-        """Get absolute url."""
         return reverse("homepage")
 
     def get_translated_string(self, language):
-        """Get translation."""
         return TranslatedString.objects.get_or_create(string=self, language=language)[0]
 
     class Meta:
@@ -67,7 +61,6 @@ class TranslatableString(models.Model):
 
 
 class TranslatedString(models.Model):
-    """Model for Brand."""
 
     string = models.ForeignKey(TranslatableString, on_delete=models.CASCADE, null=False, blank=False)
     language = models.CharField(max_length=10, blank=False, null=False)

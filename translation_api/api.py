@@ -18,13 +18,11 @@ logger = logging.getLogger("django")
 
 
 class ReceiveTranslationsView(APIView):
-    """Receive translations from the client and save them to the database."""
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        """Receive translations from the client and save them to the database."""
         translations = request.data.get("translations", [])
         no_obsolete = request.data.get("no_obsolete", False)
         source_project = SourceProject.objects.get_or_create(
@@ -88,13 +86,11 @@ class ReceiveTranslationsView(APIView):
 
 
 class PullTranslationsView(APIView):
-    """Send translations to the client."""
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        """Send translations to the client."""
         translations = []
         source_projects = request.data.get("source_project").split(",")
 

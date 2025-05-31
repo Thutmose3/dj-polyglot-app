@@ -18,7 +18,6 @@ repos:
     -    id: trailing-whitespace
          exclude: (^docs/)
     -    id: check-yaml
-    -    id: check-docstring-first
     -    id: check-case-conflict
     -    id: check-json
     -    id: check-merge-conflict
@@ -31,12 +30,6 @@ repos:
     hooks:
     -    id: black
          exclude: (^.*\b(migrations)\b.*$|^.*\b(__version__.py)\b.*)
-
--   repo: https://github.com/PyCQA/pydocstyle
-    rev: 6.1.1
-    hooks:
-    -    id: pydocstyle
-         exclude: (^.*\b(migrations)\b.*$|^g_merchant/|^annoying/|^.*\b(apps.py)\b.*)
 
 
 -   repo: https://github.com/asottile/reorder_python_imports
