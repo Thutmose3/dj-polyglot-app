@@ -36,18 +36,22 @@ class ReceiveTranslationsView(APIView):
             context = translation.get("context")
             # locale = translation.get("locale")
             try:
-                # make case sensitive
                 translatable_string, created = TranslatableString.objects.get_or_create(
-                    string__iexact=msgid, source_project=source_project, context=context
+                    string=msgid, source_project=source_project, context=context
                 )
 
             except TranslatableString.MultipleObjectsReturned:
-                return Response(
-                    {
-                        "error": f"Multiple translatable strings found for the same msgid and context: {msgid} with context: {context} in project {source_project.name}"
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
+                # Find all duplicates
+                duplicates = TranslatableString.objects.filter(
+                    string=msgid, source_project=source_project, context=context
+                ).order_by("created")
+
+                # Keep the first, delete the rest
+                survivor = duplicates.first()
+                duplicates.exclude(id=survivor.id).delete()
+
+                translatable_string = survivor
+                created = False
 
             translatable_string_ids.append(translatable_string.id)
             for language in [code for code, _ in settings.LANGUAGES]:
