@@ -36,8 +36,9 @@ class ReceiveTranslationsView(APIView):
             context = translation.get("context")
             # locale = translation.get("locale")
             try:
+                # make case sensitive
                 translatable_string, created = TranslatableString.objects.get_or_create(
-                    string=msgid, source_project=source_project, context=context
+                    string__iexact=msgid, source_project=source_project, context=context
                 )
 
             except TranslatableString.MultipleObjectsReturned:
